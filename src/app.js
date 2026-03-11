@@ -1,0 +1,10 @@
+const express = require("express");
+const topicRoutes = require("./routes/topicRoutes");
+const subscriberRoutes = require("./routes/subscriberRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const app = express();
+app.use(express.json());
+app.use("/topics", topicRoutes);
+app.use("/subscribers", subscriberRoutes);
+app.use("/events", eventRoutes);
+module.exports = app;
