@@ -75,7 +75,7 @@ The system is fully controllable via RESTful APIs.
 
 ```
 ├── server.js               # Entry point, starts the HTTP server
-├── test_e2e.js             # End-to-end integration test script
+├── test.js                 # End-to-end integration test script
 └── src/
     ├── app.js              # Express app configuration & middleware
     ├── Memory.js           # In-memory data store using ES6 Maps
