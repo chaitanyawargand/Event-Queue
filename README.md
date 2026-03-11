@@ -44,7 +44,7 @@ The project includes an End-to-End (E2E) testing script that programmatically ac
 Open a new terminal window while the server is running and execute:
 
 ```bash
-node test_e2e.js
+node test.js
 ```
 
 ## API Reference
