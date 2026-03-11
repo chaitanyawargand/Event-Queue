@@ -11,7 +11,7 @@ class Subscriber {
     return this.queue.shift();
   }
   getQueue() {
-    return this.queue;
+    return [...this.queue];
   }
 }
 module.exports = Subscriber;

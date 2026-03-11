@@ -1,25 +1,21 @@
-
-class Topic{
-    constructor(id,name){
-        this.id=id;
-        this.name=name;
-        this.subscribers=new set();
-        this.producers=new set();
-    }
-    addSubsciber(subscribeId){
-        this.subscribers.add(subscribeId);
-    }
-    removeSubscriber(subscribeId){
-        this.subscribers.remove(subscribeId);
-    }
-    addProducer(producerId){
-        this.producers.add(producerId);
-    }
-    getProducer(){
-        [...this.producers];
-    }
-    getSubscriber(){
-        [...this.subscribers];
-    }
+class Topic {
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+    this.subscribers = new Set();
+    this.events = [];
+  }
+  addSubscriber(subscriberId) {
+    this.subscribers.add(subscriberId);
+  }
+  removeSubscriber(subscriberId) {
+    this.subscribers.delete(subscriberId);
+  }
+  getSubscribers() {
+    return [...this.subscribers];
+  }
+  addEvent(event) {
+    this.events.push(event);
+  }
 }
-module.exports=Topic;
+module.exports = Topic;

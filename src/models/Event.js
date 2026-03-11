@@ -1,8 +1,9 @@
-class Event{
-    constructor(id,message,time){
-        this.id=id;
-        this.message=message;
-        this.time=time;
-    }
+class Event {
+  constructor(id, topicid, message, timestamp) {
+    this.id = id;
+    this.topicid = topicid;
+    this.message = message;
+    this.timestamp = timestamp;
+  }
 }
-module.exports=Event;
+module.exports = Event;
