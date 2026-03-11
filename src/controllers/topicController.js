@@ -10,6 +10,10 @@ const createTopic = (req, res) => {
         message: "Topic name is required",
       });
     }
+    const topicExists = Array.from(Memory.topics.values()).some((t) => t.name === name);
+    if (topicExists) {
+      return res.status(409).json({ message: "Topic name already exists" });
+    }
     const id = uuidv4();
     const topic = new Topic(id, name);
     Memory.topics.set(id, topic);

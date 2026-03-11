@@ -1,7 +1,7 @@
 const express = require("express");
-const topicRoutes = require("./routes/topicRoutes");
-const subscriberRoutes = require("./routes/subscriberRoutes");
-const eventRoutes = require("./routes/eventRoutes");
+const topicRoutes = require("./Routes/topicRoutes");
+const subscriberRoutes = require("./Routes/subscribeRoutes");
+const eventRoutes = require("./Routes/eventRoutes");
 const app = express();
 app.use(express.json());
 app.use("/topics", topicRoutes);

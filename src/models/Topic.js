@@ -14,6 +14,9 @@ class Topic {
   getSubscribers() {
     return [...this.subscribers];
   }
+  hasSubscriber(subscriberId) {
+    return this.subscribers.has(subscriberId);
+  }
   addEvent(event) {
     this.events.push(event);
   }

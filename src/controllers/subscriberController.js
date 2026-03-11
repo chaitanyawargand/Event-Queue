@@ -2,13 +2,17 @@ const Subscriber = require("../models/Subscriber");
 const Memory = require("../Memory");
 const { v4: uuidv4 } = require("uuid");
 
-const createSubsciber = (req, res) => {
+const createSubscriber = (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
       return res.status(400).json({
         message: "Subscriber name is required",
       });
+    }
+    const subExists = Array.from(Memory.subscribers.values()).some((s) => s.name === name);
+    if (subExists) {
+      return res.status(409).json({ message: "Subscriber name already exists" });
     }
     const id = uuidv4();
     const subscriber = new Subscriber(id, name);
@@ -28,10 +32,13 @@ const addSubscriber = (req, res) => {
     if (!topicid || !subscriberid)
       return res.status(400).json({ message: "Bad request" });
     const topic = Memory.topics.get(topicid);
-    if (!topic) return res.status(400).json({ message: "Topic Not found" });
+    if (!topic) return res.status(404).json({ message: "Topic Not found" });
     const subscriber = Memory.subscribers.get(subscriberid);
     if (!subscriber)
-      return res.status(400).json({ message: "subsciber Not found" });
+      return res.status(404).json({ message: "Subscriber not found" });
+    if (topic.hasSubscriber(subscriberid)) {
+      return res.status(409).json({ message: "Subscriber is already subscribed to this topic" });
+    }
     topic.addSubscriber(subscriberid);
     return res.status(200).json({ message: "Subscriber added" });
   } catch (err) {
@@ -45,10 +52,13 @@ const removeSubscriber = (req, res) => {
     if (!topicid || !subscriberid)
       return res.status(400).json({ message: "Bad request" });
     const topic = Memory.topics.get(topicid);
-    if (!topic) return res.status(400).json({ message: "Topic Not found" });
+    if (!topic) return res.status(404).json({ message: "Topic not found" });
     const subscriber = Memory.subscribers.get(subscriberid);
     if (!subscriber)
-      return res.status(400).json({ message: "subsciber Not found" });
+      return res.status(404).json({ message: "Subscriber not found" });
+    if (!topic.hasSubscriber(subscriberid)) {
+      return res.status(404).json({ message: "Subscriber is not subscribed to this topic" });
+    }
     topic.removeSubscriber(subscriberid);
     return res.status(200).json({ message: "Subscriber removed" });
   } catch (err) {
@@ -71,6 +81,6 @@ const consumeEvent = (req, res) => {
 module.exports = {
   addSubscriber,
   removeSubscriber,
-  createSubsciber,
+  createSubscriber,
   consumeEvent,
 };

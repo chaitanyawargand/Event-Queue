@@ -8,7 +8,7 @@ const publishEvent = (req, res) => {
     if (!topicid || !message)
       return res.status(400).json({ message: "Bad request" });
     const topic = Memory.topics.get(topicid);
-    if (!topic) return res.status(400).json({ message: "Topic Not found" });
+    if (!topic) return res.status(404).json({ message: "Topic not found" });
     const id = uuidv4();
     const event = new Event(id, topicid, message, Date.now());
     topic.addEvent(event);
@@ -19,7 +19,7 @@ const publishEvent = (req, res) => {
         subscriber.enqueue(event);
       }
     });
-    return res.status(200).json({ message: "Publishe Event" });
+    return res.status(200).json({ message: "Published Event" });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
